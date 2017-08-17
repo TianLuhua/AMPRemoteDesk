@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="General"
+        android:key="pref_general">
+        <CheckBoxPreference
+            android:title="Enable local debugging"
+            android:summary="Local debugging allows developers to debug in a local overlay window"
+            android:key="local_debugging"
+            android:defaultValue="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="Network"
+            android:key="pref_network">
+
+        <EditTextPreference
+                android:title="Port Number"
+                android:key="port"
+                android:defaultValue="6000"
+                android:inputType="number"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="Video Streaming"
+            android:key="pref_video">
+
+        <ListPreference
+                android:key="bitrate"
+                android:title="Bitrate"
+                android:summary="Keep it low for slow internet connection" />
+
+        <ListPreference
+                android:key="resolution"
+                android:title="Video resolution"
+                android:summary="Keep it low for slow internet connection" />
+    </PreferenceCategory>
+</PreferenceScreen>

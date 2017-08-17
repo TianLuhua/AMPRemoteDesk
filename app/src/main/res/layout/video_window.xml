@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.action.amp.ampremotedesk.app.service.VideoWindow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:background="@android:color/black"
+    android:padding="5dp"
+    android:layout_height="200dp">
+
+    <SurfaceView
+        android:id="@+id/demo_surface_view"
+        android:layout_width="150dp"
+        android:layout_height="300dp" />
+
+</com.action.amp.ampremotedesk.app.service.VideoWindow>
