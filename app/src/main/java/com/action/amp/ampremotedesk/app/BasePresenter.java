@@ -1,7 +1,7 @@
 package com.action.amp.ampremotedesk.app;
 
 /**
- * Created by Administrator on 2017/8/17 0017.
+ * Created by tianluhua on 21/7/17.
  */
 public interface  BasePresenter {
     void start();

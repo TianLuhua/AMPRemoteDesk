@@ -25,7 +25,9 @@ import com.action.amp.ampremotedesk.R;
 import com.action.amp.ampremotedesk.app.service.AddressInputDialog;
 import com.action.amp.ampremotedesk.app.service.ServerService;
 
-
+/**
+ * Created by tianluhua on 21/7/17.
+ */
 public class MainActivity extends Activity {
 
     public static final String TAG="MainActivity";
@@ -87,10 +89,7 @@ public class MainActivity extends Activity {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
-        if (id == R.id.action_install) {
-            InstallDialog installDialog = new InstallDialog();
-            installDialog.show(getFragmentManager(), "INSTALL_DIALOG");
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -146,52 +145,7 @@ public class MainActivity extends Activity {
 //                    finish();
                 }
             });
-            builder.setNegativeButton("Install to /system", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    new InstallDialog().show(getFragmentManager(), "INSTALL_DIALOG");
-                }
-            });
-            return builder.create();
-        }
-    }
 
-    @SuppressLint("ValidFragment")
-    private class InstallDialog extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Install the script");
-            builder.setMessage("It's necessary to install this app in the /system partition. Proceed?");
-            builder.setPositiveButton("Install", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    new AsyncTask<Void, Void, Void>() {
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(MainActivity.this,
-                                            "Installing", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putBoolean(KEY_SYSTEM_PRIVILEGE_PREF, true);
-                            editor.commit();
-                            return null;
-                        }
-                    }.execute();
-                }
-            })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(MainActivity.this,
-                                    "This app won't run unless it is installed in the system partition",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
             return builder.create();
         }
     }

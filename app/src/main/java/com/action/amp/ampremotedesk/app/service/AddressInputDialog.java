@@ -15,9 +15,8 @@ import android.widget.LinearLayout;
 import com.action.amp.ampremotedesk.R;
 import com.action.amp.ampremotedesk.app.client.ClientActivity;
 
-
 /**
- * Created by omerjerk on 14/8/14.
+ * Created by tianluhua on 21/7/17.
  */
 public class AddressInputDialog extends DialogFragment {
 

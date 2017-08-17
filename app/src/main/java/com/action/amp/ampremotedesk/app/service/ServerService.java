@@ -32,8 +32,8 @@ import com.action.amp.ampremotedesk.R;
 import com.action.amp.ampremotedesk.app.MainActivity;
 import com.action.amp.ampremotedesk.app.SettingsActivity;
 import com.action.amp.ampremotedesk.app.client.ClientActivity;
+import com.action.amp.ampremotedesk.app.utils.AddressUtils;
 import com.action.amp.ampremotedesk.app.utils.CodecUtils;
-import com.action.amp.ampremotedesk.app.utils.Utils;
 import com.koushikdutta.async.ByteBufferList;
 import com.koushikdutta.async.DataEmitter;
 import com.koushikdutta.async.callback.CompletedCallback;
@@ -50,7 +50,9 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Created by tianluhua on 21/7/17.
+ */
 public class ServerService extends Service {
 
     private static final String TAG = "ServerService";
@@ -446,7 +448,7 @@ public class ServerService extends Service {
                         .setOngoing(true)
                         .addAction(R.drawable.ic_media_stop, "Stop", stopServiceIntent)
                         .setContentTitle(message)
-                        .setContentText(Utils.getIPAddress(true) + ":" + serverPort);
+                        .setContentText(AddressUtils.getIPAddress(true) + ":" + serverPort);
         startForeground(6000, mBuilder.build());
 
     }

@@ -9,7 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * Created by omerjerk on 19/9/15.
+ /**
+ * Created by tianluhua on 21/7/17.
  *
  * Class to create seamless input/touch events on your Android device without root
  */

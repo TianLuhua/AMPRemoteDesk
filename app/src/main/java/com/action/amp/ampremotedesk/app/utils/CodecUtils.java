@@ -6,7 +6,7 @@ import android.media.MediaCodecList;
 import java.nio.ByteBuffer;
 
 /**
- * Created by omerjerk on 21/7/14.
+ * Created by tianluhua on 21/7/17.
  */
 public class CodecUtils {
 

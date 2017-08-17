@@ -7,9 +7,5 @@
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/action_settings" />
-    <item
-        android:id="@+id/action_install"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="Install to /system" />
+
 </menu>

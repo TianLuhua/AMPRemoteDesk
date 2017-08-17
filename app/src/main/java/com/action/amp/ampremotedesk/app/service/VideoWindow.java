@@ -22,7 +22,7 @@ import java.nio.ByteBuffer;
 
 
 /**
- * Created by omerjerk on 13/1/15.
+ * Created by tianluhua on 21/7/17.
  */
 @SuppressLint("NewApi")
 public class VideoWindow extends LinearLayout implements SurfaceHolder.Callback{

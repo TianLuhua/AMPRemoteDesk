@@ -8,9 +8,11 @@ import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 
 import com.action.amp.ampremotedesk.R;
-import com.action.amp.ampremotedesk.app.utils.Utils;
+import com.action.amp.ampremotedesk.app.utils.HideSystemUIUtils;
 
-
+/**
+ * Created by tianluhua on 21/7/17.
+ */
 public class SettingsActivity extends PreferenceActivity implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -29,7 +31,7 @@ public class SettingsActivity extends PreferenceActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Utils.hideSystemUI(this);
+        HideSystemUIUtils.hideSystemUI(this);
         addPreferencesFromResource(R.xml.preferences);
 
         portNumberPref = (EditTextPreference) findPreference(KEY_PORT_PREF);

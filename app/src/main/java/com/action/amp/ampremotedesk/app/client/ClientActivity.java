@@ -18,8 +18,9 @@ import android.widget.Toast;
 import com.action.amp.ampremotedesk.R;
 import com.action.amp.ampremotedesk.app.MainActivity;
 import com.action.amp.ampremotedesk.app.service.AddressInputDialog;
+import com.action.amp.ampremotedesk.app.utils.AddressUtils;
 import com.action.amp.ampremotedesk.app.utils.CodecUtils;
-import com.action.amp.ampremotedesk.app.utils.Utils;
+import com.action.amp.ampremotedesk.app.utils.HideSystemUIUtils;
 import com.action.amp.ampremotedesk.grafika.CircularEncoderBuffer;
 import com.koushikdutta.async.ByteBufferList;
 import com.koushikdutta.async.DataEmitter;
@@ -36,6 +37,9 @@ import java.nio.ByteBuffer;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Created by tianluhua on 21/7/17.
+ */
 @SuppressLint("NewApi")
 public class ClientActivity extends Activity implements SurfaceHolder.Callback, View.OnTouchListener {
 
@@ -76,7 +80,7 @@ public class ClientActivity extends Activity implements SurfaceHolder.Callback, 
         deviceWidth = dm.widthPixels;
         deviceHeight = dm.heightPixels;
         address = getIntent().getStringExtra(AddressInputDialog.KEY_ADDRESS_EXTRA);
-        Utils.hideSystemUI(this);
+        HideSystemUIUtils.hideSystemUI(this);
         setContentView(R.layout.activity_client);
         surfaceView = (SurfaceView) findViewById(R.id.main_surface_view);
         surfaceView.getHolder().addCallback(this);
