@@ -1,4 +1,4 @@
-package com.action.amp.ampremotedesk.app;
+package com.action.amp.ampremotedesk.app.main;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.action.amp.ampremotedesk.R;
 import com.action.amp.ampremotedesk.app.service.AddressInputDialog;
 import com.action.amp.ampremotedesk.app.service.ServerService;
+import com.action.amp.ampremotedesk.app.settings.SettingActivity;
 
 /**
  * Created by tianluhua on 21/7/17.
@@ -35,7 +36,6 @@ public class MainActivity extends Activity {
     public static MediaProjection mMediaProjection;
 
     private  SharedPreferences prefs;
-    private static final String KEY_SYSTEM_PRIVILEGE_PREF = "has_system_privilege";
     private MediaProjectionManager mMediaProjectionManager;
     private static final int REQUEST_MEDIA_PROJECTION = 1;
 
@@ -43,7 +43,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Utils.hideSystemUI(this);
         setContentView(R.layout.activity_main);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (savedInstanceState == null) {
@@ -86,7 +85,7 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+            startActivity(new Intent(this, SettingActivity.class));
             return true;
         }
 
@@ -146,22 +145,6 @@ public class MainActivity extends Activity {
                 }
             });
 
-            return builder.create();
-        }
-    }
-
-    @SuppressLint("ValidFragment")
-    private class ErrorDialog extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Not Rooted!");
-            builder.setMessage("The device needs to be rooted for this app to use. Please exit the app.");
-            builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            });
             return builder.create();
         }
     }

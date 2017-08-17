@@ -29,8 +29,8 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.action.amp.ampremotedesk.R;
-import com.action.amp.ampremotedesk.app.MainActivity;
-import com.action.amp.ampremotedesk.app.SettingsActivity;
+import com.action.amp.ampremotedesk.app.main.MainActivity;
+import com.action.amp.ampremotedesk.app.settings.SettingActivity;
 import com.action.amp.ampremotedesk.app.client.ClientActivity;
 import com.action.amp.ampremotedesk.app.utils.AddressUtils;
 import com.action.amp.ampremotedesk.app.utils.CodecUtils;
@@ -106,7 +106,7 @@ public class ServerService extends Service {
             deviceWidth = dm.widthPixels;
             deviceHeight = dm.heightPixels;
             float resolutionRatio = Float.parseFloat(
-                    preferences.getString(SettingsActivity.KEY_RESOLUTION_PREF, "0.25"));
+                    preferences.getString(SettingActivity.KEY_RESOLUTION_PREF, "0.25"));
             mDisplay.getRealSize(resolution);
             resolution.x = (int) (resolution.x * resolutionRatio);
             resolution.y = (int) (resolution.y * resolutionRatio);
@@ -114,8 +114,8 @@ public class ServerService extends Service {
             if (!LOCAL_DEBUG) {
                 server = new AsyncHttpServer();
                 server.websocket("/", null, websocketCallback);
-                serverPort = Integer.parseInt(preferences.getString(SettingsActivity.KEY_PORT_PREF, "6060"));
-                bitrateRatio = Float.parseFloat(preferences.getString(SettingsActivity.KEY_BITRATE_PREF, "1"));
+                serverPort = Integer.parseInt(preferences.getString(SettingActivity.KEY_PORT_PREF, "6060"));
+                bitrateRatio = Float.parseFloat(preferences.getString(SettingActivity.KEY_BITRATE_PREF, "1"));
                 updateNotification("Streaming is live at");
                 server.listen(serverPort);
                 new Thread(new Runnable() {

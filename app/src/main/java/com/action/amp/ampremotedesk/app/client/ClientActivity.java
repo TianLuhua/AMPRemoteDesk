@@ -16,9 +16,8 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.action.amp.ampremotedesk.R;
-import com.action.amp.ampremotedesk.app.MainActivity;
+import com.action.amp.ampremotedesk.app.main.MainActivity;
 import com.action.amp.ampremotedesk.app.service.AddressInputDialog;
-import com.action.amp.ampremotedesk.app.utils.AddressUtils;
 import com.action.amp.ampremotedesk.app.utils.CodecUtils;
 import com.action.amp.ampremotedesk.app.utils.HideSystemUIUtils;
 import com.action.amp.ampremotedesk.grafika.CircularEncoderBuffer;

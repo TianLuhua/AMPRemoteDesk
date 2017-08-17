@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 
 import com.action.amp.ampremotedesk.R;
-import com.action.amp.ampremotedesk.app.MainActivity;
+import com.action.amp.ampremotedesk.app.main.MainActivity;
 import com.action.amp.ampremotedesk.app.utils.CodecUtils;
 import com.action.amp.ampremotedesk.grafika.CircularEncoderBuffer;
 

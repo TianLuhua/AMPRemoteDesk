@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
     <activity
-        android:name="com.action.amp.ampremotedesk.app.MainActivity"
+        android:name=".app.main.MainActivity"
         android:label="@string/app_name">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,7 @@
         android:screenOrientation="sensor">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.action.amp.ampremotedesk.app.MainActivity" />
+            android:value=".app.main.MainActivity" />
     </activity>
 
     <service
@@ -39,12 +39,12 @@
         android:exported="true"
         android:label="@string/title_activity_server"/>
     <activity
-        android:name="com.action.amp.ampremotedesk.app.SettingsActivity"
+        android:name=".app.settings.SettingActivity"
         android:label="Settings"
-        android:parentActivityName="com.action.amp.ampremotedesk.app.MainActivity">
+        android:parentActivityName=".app.main.MainActivity">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.action.amp.ampremotedesk.app.MainActivity" />
+            android:value=".app.main.MainActivity" />
     </activity>
     </application>
 </manifest>

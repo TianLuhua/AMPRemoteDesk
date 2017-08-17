@@ -1,4 +1,4 @@
-package com.action.amp.ampremotedesk.app;
+package com.action.amp.ampremotedesk.app.settings;
 
 import android.content.SharedPreferences;
 import android.graphics.Point;
@@ -13,7 +13,7 @@ import com.action.amp.ampremotedesk.app.utils.HideSystemUIUtils;
 /**
  * Created by tianluhua on 21/7/17.
  */
-public class SettingsActivity extends PreferenceActivity implements
+public class SettingActivity extends PreferenceActivity implements
         SharedPreferences.OnSharedPreferenceChangeListener {
 
     private EditTextPreference portNumberPref;
