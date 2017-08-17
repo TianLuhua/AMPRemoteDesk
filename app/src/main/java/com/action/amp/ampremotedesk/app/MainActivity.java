@@ -28,29 +28,15 @@ import com.action.amp.ampremotedesk.app.service.ServerService;
 
 public class MainActivity extends Activity {
 
-    SharedPreferences prefs;
-    boolean hasSystemPrivileges = false;
-
-    private static final String KEY_SYSTEM_PRIVILEGE_PREF = "has_system_privilege";
-
+    public static final String TAG="MainActivity";
     public static final boolean DEBUG = false;
-
     public static MediaProjection mMediaProjection;
+
+    private  SharedPreferences prefs;
+    private static final String KEY_SYSTEM_PRIVILEGE_PREF = "has_system_privilege";
     private MediaProjectionManager mMediaProjectionManager;
-
     private static final int REQUEST_MEDIA_PROJECTION = 1;
-    private Intent mResultData;
-    private int mResultCode;
 
-    private static final String INSTALL_SCRIPT =
-            "mount -o rw,remount /system\n" +
-                    "cat %s > /system/priv-app/RemoteDroid.apk.tmp\n" +
-                    "chmod 644 /system/priv-app/RemoteDroid.apk.tmp\n" +
-                    "pm uninstall %s\n" +
-                    "mv /system/priv-app/RemoteDroid.apk.tmp /system/priv-app/RemoteDroid.apk\n" +
-                    "pm install -r /system/priv-app/RemoteDroid.apk\n" +
-                    "sleep 5\n" +
-                    "am start -n in.tosc.remotedroid.app/.MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +44,10 @@ public class MainActivity extends Activity {
 //        Utils.hideSystemUI(this);
         setContentView(R.layout.activity_main);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        hasSystemPrivileges = prefs.getBoolean(KEY_SYSTEM_PRIVILEGE_PREF, false);
         if (savedInstanceState == null) {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
-//                    final boolean isRooted = Shell.SU.available();
                     final boolean isRooted = true;
                     runOnUiThread(new Runnable() {
                         @Override
@@ -195,11 +179,6 @@ public class MainActivity extends Activity {
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putBoolean(KEY_SYSTEM_PRIVILEGE_PREF, true);
                             editor.commit();
-//                            Shell.SU.run(String.format(INSTALL_SCRIPT,
-//                                    new String[]{
-//                                            MainActivity.this.getPackageCodePath(),
-//                                            MainActivity.this.getPackageName()
-//                                    }));
                             return null;
                         }
                     }.execute();

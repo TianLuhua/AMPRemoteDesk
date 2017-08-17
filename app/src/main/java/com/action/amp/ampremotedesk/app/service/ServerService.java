@@ -53,28 +53,23 @@ import java.util.List;
 
 public class ServerService extends Service {
 
-    private MediaCodec encoder = null;
+    private static final String TAG = "ServerService";
 
-    private static final String TAG = "omerjerk";
+    private MediaCodec encoder = null;
 
     private int serverPort;
     private float bitrateRatio;
-
     private AsyncHttpServer server;
     private List<WebSocket> _sockets = new ArrayList<WebSocket>();
-
-    Thread encoderThread = null;
-
-    Handler mHandler;
-
-    SharedPreferences preferences;
-
+    private Thread encoderThread = null;
+    private   Handler mHandler;
+    private  SharedPreferences preferences;
     static int deviceWidth;
     static int deviceHeight;
-    Point resolution = new Point();
+    private  Point resolution = new Point();
 
     private static boolean LOCAL_DEBUG = false;
-    VideoWindow videoWindow = null;
+    private VideoWindow videoWindow = null;
     private VirtualDisplay virtualDisplay;
 
     private class ToastRunnable implements Runnable {
