@@ -9,10 +9,11 @@ import com.action.amp.ampremotedesk.app.BaseView;
 public interface SettingContract {
 
 
-    interface View extends BaseView<Present>{
+    interface View extends BaseView<Presenter> {
 
     }
-    interface Present extends BasePresenter{
+
+    interface Presenter extends BasePresenter {
 
     }
 }

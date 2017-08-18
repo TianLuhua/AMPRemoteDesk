@@ -42,7 +42,7 @@ import java.util.TimerTask;
 @SuppressLint("NewApi")
 public class ClientActivity extends Activity implements SurfaceHolder.Callback, View.OnTouchListener {
 
-    private static final String TAG = "omerjerk";
+    private static final String TAG = "ClientActivity";
 
     private SurfaceView surfaceView;
 
@@ -293,7 +293,7 @@ public class ClientActivity extends Activity implements SurfaceHolder.Callback, 
         try {
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    touchData.put("type", KEY_FINGER_DOWN);
+                    touchData.put(KEY_EVENT_TYPE, KEY_FINGER_DOWN);
                     break;
                 case MotionEvent.ACTION_MOVE:
                     touchData.put(KEY_EVENT_TYPE, KEY_FINGER_MOVE);
