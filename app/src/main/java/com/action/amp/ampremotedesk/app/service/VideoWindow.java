@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 
 import com.action.amp.ampremotedesk.R;
+import com.action.amp.ampremotedesk.app.Config;
 import com.action.amp.ampremotedesk.app.main.MainActivity;
 import com.action.amp.ampremotedesk.app.utils.CodecUtils;
 import com.action.amp.ampremotedesk.grafika.CircularEncoderBuffer;
@@ -98,7 +99,7 @@ public class VideoWindow extends LinearLayout implements SurfaceHolder.Callback{
         while(!decoderConfigured) {
         }
 
-        if (MainActivity.DEBUG) Log.d(TAG, "Decoder Configured");
+            if (Config.DeBug.DEBUG) Log.d(TAG, "Decoder Configured");
 
         while(!firstIFrameAdded) {}
 
@@ -132,9 +133,9 @@ public class VideoWindow extends LinearLayout implements SurfaceHolder.Callback{
             if (decoderConfigured) {
                 int decoderStatus = decoder.dequeueOutputBuffer(info, CodecUtils.TIMEOUT_USEC);
                 if (decoderStatus == MediaCodec.INFO_TRY_AGAIN_LATER) {
-                    if (MainActivity.DEBUG) Log.d(TAG, "no output from decoder available");
+                    if (Config.DeBug.DEBUG) Log.d(TAG, "no output from decoder available");
                 } else if (decoderStatus == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
-                    if (MainActivity.DEBUG) Log.d(TAG, "decoder output buffers changed");
+                    if (Config.DeBug.DEBUG) Log.d(TAG, "decoder output buffers changed");
                 } else if (decoderStatus == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
                     // this happens before the first frame is returned
                     decoderOutputFormat = decoder.getOutputFormat();

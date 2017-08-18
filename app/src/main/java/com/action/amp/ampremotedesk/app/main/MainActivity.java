@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.action.amp.ampremotedesk.R;
+import com.action.amp.ampremotedesk.app.Config;
 import com.action.amp.ampremotedesk.app.service.AddressInputDialog;
 import com.action.amp.ampremotedesk.app.service.ServerService;
 import com.action.amp.ampremotedesk.app.settings.SettingActivity;
@@ -31,11 +32,11 @@ import com.action.amp.ampremotedesk.app.settings.SettingActivity;
  */
 public class MainActivity extends Activity {
 
-    public static final String TAG="MainActivity";
-    public static final boolean DEBUG = false;
+    public static final String TAG = "MainActivity";
+
     public static MediaProjection mMediaProjection;
 
-    private  SharedPreferences prefs;
+    private SharedPreferences prefs;
     private MediaProjectionManager mMediaProjectionManager;
     private static final int REQUEST_MEDIA_PROJECTION = 1;
 
@@ -102,7 +103,7 @@ public class MainActivity extends Activity {
             }
             mMediaProjection = mMediaProjectionManager.getMediaProjection(resultCode, data);
             Intent startServerIntent = new Intent(MainActivity.this, ServerService.class);
-            startServerIntent.setAction("START");
+            startServerIntent.setAction(Config.ServerServiceActionKey.ACTION_START);
             startService(startServerIntent);
         }
     }
@@ -139,7 +140,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     Intent startServerIntent = new Intent(MainActivity.this, ServerService.class);
-                    startServerIntent.setAction("START");
+                    startServerIntent.setAction(Config.ServerServiceActionKey.ACTION_START);
                     startService(startServerIntent);
 //                    finish();
                 }

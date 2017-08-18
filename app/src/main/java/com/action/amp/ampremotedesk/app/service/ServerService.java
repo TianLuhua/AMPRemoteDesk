@@ -29,6 +29,8 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.action.amp.ampremotedesk.R;
+import com.action.amp.ampremotedesk.app.Config;
+import com.action.amp.ampremotedesk.app.client.ClientFragment;
 import com.action.amp.ampremotedesk.app.main.MainActivity;
 import com.action.amp.ampremotedesk.app.settings.SettingActivity;
 import com.action.amp.ampremotedesk.app.client.ClientActivity;
@@ -64,11 +66,11 @@ public class ServerService extends Service {
     private AsyncHttpServer server;
     private List<WebSocket> _sockets = new ArrayList<WebSocket>();
     private Thread encoderThread = null;
-    private   Handler mHandler;
-    private  SharedPreferences preferences;
+    private Handler mHandler;
+    private SharedPreferences preferences;
     static int deviceWidth;
     static int deviceHeight;
-    private  Point resolution = new Point();
+    private Point resolution = new Point();
 
     private static boolean LOCAL_DEBUG = false;
     private VideoWindow videoWindow = null;
@@ -93,11 +95,11 @@ public class ServerService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && intent.getAction() == "STOP") {
+        if (intent != null && intent.getAction() == Config.ServerServiceActionKey.ACTION_STOP) {
             dispose();
             return START_NOT_STICKY;
         }
-        if (server == null && intent.getAction().equals("START")) {
+        if (server == null && intent.getAction().equals(Config.ServerServiceActionKey.ACTION_START)) {
             preferences = PreferenceManager.getDefaultSharedPreferences(this);
             LOCAL_DEBUG = preferences.getBoolean("local_debugging", false);
             DisplayMetrics dm = new DisplayMetrics();
@@ -367,15 +369,15 @@ public class ServerService extends Service {
                                         try {
                                             JSONObject touch = new JSONObject(s);
                                             float x = Float.parseFloat(touch
-                                                    .getString("x"))
+                                                    .getString(Config.TouchKey.KEY_EVENT_X))
                                                     * ServerService.deviceWidth;
                                             float y = Float.parseFloat(touch
-                                                    .getString("y"))
+                                                    .getString(Config.TouchKey.KEY_EVENT_Y))
                                                     * ServerService.deviceHeight;
                                             String eventType = touch
-                                                    .getString(ClientActivity.KEY_EVENT_TYPE);
+                                                    .getString(Config.TouchKey.KEY_EVENT_TYPE);
                                             if (eventType
-                                                    .equals(ClientActivity.KEY_FINGER_DOWN)) {
+                                                    .equals(Config.TouchKey.KEY_FINGER_DOWN)) {
                                                 input.injectMotionEvent(
                                                         InputDeviceCompat.SOURCE_TOUCHSCREEN,
                                                         0,
@@ -383,7 +385,7 @@ public class ServerService extends Service {
                                                                 .uptimeMillis(),
                                                         x, y, 1.0f);
                                             } else if (eventType
-                                                    .equals(ClientActivity.KEY_FINGER_UP)) {
+                                                    .equals(Config.TouchKey.KEY_FINGER_UP)) {
                                                 input.injectMotionEvent(
                                                         InputDeviceCompat.SOURCE_TOUCHSCREEN,
                                                         1,
@@ -391,7 +393,7 @@ public class ServerService extends Service {
                                                                 .uptimeMillis(),
                                                         x, y, 1.0f);
                                             } else if (eventType
-                                                    .equals(ClientActivity.KEY_FINGER_MOVE)) {
+                                                    .equals(Config.TouchKey.KEY_FINGER_MOVE)) {
                                                 input.injectMotionEvent(
                                                         InputDeviceCompat.SOURCE_TOUCHSCREEN,
                                                         2,
@@ -440,7 +442,7 @@ public class ServerService extends Service {
      */
     private void updateNotification(String message) {
         Intent intent = new Intent(this, ServerService.class);
-        intent.setAction("STOP");
+        intent.setAction(Config.ServerServiceActionKey.ACTION_STOP);
         PendingIntent stopServiceIntent = PendingIntent.getService(this, 0, intent, 0);
         Notification.Builder mBuilder =
                 new Notification.Builder(this)
