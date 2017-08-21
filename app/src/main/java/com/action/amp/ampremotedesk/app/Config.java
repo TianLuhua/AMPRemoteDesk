@@ -32,4 +32,7 @@ public class Config {
         public static final String ACTION_STOP = "stop";
     }
 
+    public static class MediaProjection {
+        public static final int REQUEST_MEDIA_PROJECTION = 1;
+    }
 }

@@ -30,42 +30,19 @@ import com.action.amp.ampremotedesk.app.settings.SettingActivity;
 /**
  * Created by tianluhua on 21/7/17.
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements MainContract.View {
 
     public static final String TAG = "MainActivity";
 
     public static MediaProjection mMediaProjection;
-
-    private SharedPreferences prefs;
     private MediaProjectionManager mMediaProjectionManager;
-    private static final int REQUEST_MEDIA_PROJECTION = 1;
+    private MainContract.Presenter presenter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (savedInstanceState == null) {
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    final boolean isRooted = true;
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (isRooted) {
-                                Toast.makeText(MainActivity.this, "Device is rooted", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(MainActivity.this, "Device us unrooted! You won't be able to use" +
-                                        "this device as a server", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                    return null;
-                }
-            }.execute();
-        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mMediaProjectionManager = (MediaProjectionManager)
                     getSystemService(Context.MEDIA_PROJECTION_SERVICE);
@@ -81,9 +58,6 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingActivity.class));
@@ -96,7 +70,7 @@ public class MainActivity extends Activity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_MEDIA_PROJECTION) {
+        if (requestCode == Config.MediaProjection.REQUEST_MEDIA_PROJECTION) {
             if (resultCode != Activity.RESULT_OK) {
                 Toast.makeText(this, "User cancelled the access", Toast.LENGTH_SHORT).show();
                 return;
@@ -113,10 +87,10 @@ public class MainActivity extends Activity {
     }
 
     public void startServer(View v) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            new StartServerServiceDialog().show(getFragmentManager(), "Start service");
-        } else {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startScreenCapture();
+        } else {
+            new StartServerServiceDialog().show(getFragmentManager(), "Start service");
         }
 
     }
@@ -125,7 +99,13 @@ public class MainActivity extends Activity {
     private void startScreenCapture() {
         startActivityForResult(
                 mMediaProjectionManager.createScreenCaptureIntent(),
-                REQUEST_MEDIA_PROJECTION);
+                Config.MediaProjection.REQUEST_MEDIA_PROJECTION);
+    }
+
+    @Override
+    public void setPresenter(MainContract.Presenter presenter) {
+        this.presenter = presenter;
+
     }
 
     @SuppressLint("ValidFragment")

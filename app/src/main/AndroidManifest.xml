@@ -4,11 +4,13 @@
     package="com.action.amp.ampremotedesk">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
     <uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.INJECT_EVENTS"
+    <uses-permission
+        android:name="android.permission.INJECT_EVENTS"
         tools:ignore="ProtectedPermissions" />
 
     <application
@@ -16,35 +18,35 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-    <activity
-        android:name=".app.main.MainActivity"
-        android:label="@string/app_name">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity
+            android:name=".app.main.MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-    <activity
-        android:name="com.action.amp.ampremotedesk.app.client.ClientActivity"
-        android:label="@string/title_activity_client"
-        android:screenOrientation="sensor">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".app.main.MainActivity" />
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.action.amp.ampremotedesk.app.client.ClientActivity"
+            android:label="@string/title_activity_client"
+            android:screenOrientation="sensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".app.main.MainActivity" />
+        </activity>
 
-    <service
-        android:name="com.action.amp.ampremotedesk.app.service.ServerService"
-        android:exported="true"
-        android:label="@string/title_activity_server"/>
-    <activity
-        android:name=".app.settings.SettingActivity"
-        android:label="Settings"
-        android:parentActivityName=".app.main.MainActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".app.main.MainActivity" />
-    </activity>
+        <service
+            android:name="com.action.amp.ampremotedesk.app.service.ServerService"
+            android:exported="true"
+            android:label="@string/title_activity_server" />
+        <activity
+            android:name=".app.settings.SettingActivity"
+            android:label="Settings"
+            android:parentActivityName=".app.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".app.main.MainActivity" />
+        </activity>
     </application>
 </manifest>
