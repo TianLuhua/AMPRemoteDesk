@@ -58,12 +58,11 @@ import java.util.List;
 public class ServerService extends Service {
 
     private static final String TAG = "ServerService";
-
     private MediaCodec encoder = null;
 
     private int serverPort;
     private float bitrateRatio;
-    private AsyncHttpServer server;
+    private AsyncHttpServer dataServer;
     private List<WebSocket> _sockets = new ArrayList<WebSocket>();
     private Thread encoderThread = null;
     private Handler mHandler;
@@ -99,7 +98,7 @@ public class ServerService extends Service {
             dispose();
             return START_NOT_STICKY;
         }
-        if (server == null && intent.getAction().equals(Config.ServerServiceActionKey.ACTION_START)) {
+        if (dataServer == null && intent.getAction().equals(Config.ServerServiceActionKey.ACTION_START)) {
             preferences = PreferenceManager.getDefaultSharedPreferences(this);
             LOCAL_DEBUG = preferences.getBoolean("local_debugging", false);
             DisplayMetrics dm = new DisplayMetrics();
@@ -114,12 +113,12 @@ public class ServerService extends Service {
             resolution.y = (int) (resolution.y * resolutionRatio);
 
             if (!LOCAL_DEBUG) {
-                server = new AsyncHttpServer();
-                server.websocket("/", null, websocketCallback);
+                dataServer = new AsyncHttpServer();
+                dataServer.websocket("/", null, websocketCallback);
                 serverPort = Integer.parseInt(preferences.getString(SettingActivity.KEY_PORT_PREF, "6060"));
                 bitrateRatio = Float.parseFloat(preferences.getString(SettingActivity.KEY_BITRATE_PREF, "1"));
                 updateNotification("Streaming is live at");
-                server.listen(serverPort);
+                dataServer.listen(serverPort);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -236,7 +235,7 @@ public class ServerService extends Service {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             virtualDisplay = mDisplayManager.createVirtualDisplay("Remote Droid", CodecUtils.WIDTH, CodecUtils.HEIGHT, 50,
                     encoderInputSurface,
-                    DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC | DisplayManager.VIRTUAL_DISPLAY_FLAG_SECURE);
+                    DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC);
         } else {
             if (MainActivity.mMediaProjection != null) {
                 virtualDisplay = MainActivity.mMediaProjection.createVirtualDisplay("Remote Droid",
@@ -273,7 +272,7 @@ public class ServerService extends Service {
 
                 if (encoderStatus == MediaCodec.INFO_TRY_AGAIN_LATER) {
                     // no output available yet
-                    //Log.d(TAG, "no output from encoder available");
+                    Log.d(TAG, "no output from encoder available");
                 } else if (encoderStatus == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
                     // not expected for an encoder
                     encoderOutputBuffers = encoder.getOutputBuffers();
@@ -466,9 +465,13 @@ public class ServerService extends Service {
             encoder.release();
             encoder = null;
         }
-        if (server != null) {
-            server.stop();
-            server = null;
+        if (dataServer != null) {
+            dataServer.stop();
+            dataServer = null;
+        }
+        if (touchServer != null) {
+            touchServer.stop();
+            touchServer = null;
         }
         stopForeground(true);
         stopSelf();

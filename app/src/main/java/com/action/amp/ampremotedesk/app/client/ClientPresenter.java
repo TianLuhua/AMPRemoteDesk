@@ -30,6 +30,8 @@ public class ClientPresenter implements ClientContract.Presenter {
     private CircularEncoderBuffer encBuffer = new CircularEncoderBuffer((int) (1024 * 1024 * 0.5), 30, 7);
     private boolean decoderConfigured = false;
     private MediaCodec decoder;
+    private MediaFormat format =
+            MediaFormat.createVideoFormat(CodecUtils.MIME_TYPE, CodecUtils.WIDTH, CodecUtils.HEIGHT);
     private WebSocket dataSocket;
     private WebSocket touchSocket;
     private MediaCodec.BufferInfo info = new MediaCodec.BufferInfo();
@@ -110,9 +112,7 @@ public class ClientPresenter implements ClientContract.Presenter {
                                 info.set(Integer.parseInt(infoStringParts[0]), Integer.parseInt(infoStringParts[1]),
                                         Long.parseLong(infoStringParts[2]), Integer.parseInt(infoStringParts[3]));
                             } else {
-//                                if (presenter!=null){
-                                   setData(b,info,view.getSuface());
-//                                }
+                                setData(b,info,view.getSuface());
                             }
                             byteBufferList.recycle();
                         }
@@ -204,16 +204,13 @@ public class ClientPresenter implements ClientContract.Presenter {
     }
 
 
-
     @Override
     public void setData(ByteBuffer encodedFrame, MediaCodec.BufferInfo info, Surface surface) {
         if ((info.flags & MediaCodec.BUFFER_FLAG_CODEC_CONFIG) != 0) {
             Log.d(TAG, "Configuring Decoder");
-            MediaFormat format =
-                    MediaFormat.createVideoFormat(CodecUtils.MIME_TYPE, CodecUtils.WIDTH, CodecUtils.HEIGHT);
+
             format.setByteBuffer("csd-0", encodedFrame);
-            decoder.configure(format, surface,
-                    null, 0);
+            decoder.configure(format, surface,null, 0);
             decoder.start();
             decoderConfigured = true;
             Log.d(TAG, "decoder configured (" + info.size + " bytes)");
