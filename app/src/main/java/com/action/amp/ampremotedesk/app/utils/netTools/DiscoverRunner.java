@@ -8,6 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DiscoverRunner implements Runnable {
+
+    //ping -c 1 -w 100 sina.cn
+    //-c: 表示次数，1 为1次
+    // -w: 表示deadline, time out的时间，单位为秒，100为100秒。
+    //连起来的意思是，ping 主机sina.cn 一次，超时为100秒。
+
     private static final String CMD = "/system/bin/ping -c 1 %s";
     private static final String TAG = "DiscoverRunner";
     private List<InetAddress> results;
