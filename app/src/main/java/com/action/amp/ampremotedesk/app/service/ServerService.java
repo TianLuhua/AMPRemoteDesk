@@ -228,6 +228,7 @@ public class ServerService extends Service {
         DisplayManager mDisplayManager = (DisplayManager) getSystemService(Context.DISPLAY_SERVICE);
         Surface encoderInputSurface = null;
         try {
+            //获取encoder的数据输入的surface
             encoderInputSurface = createDisplaySurface();
         } catch (IOException e) {
             e.printStackTrace();
@@ -298,8 +299,11 @@ public class ServerService extends Service {
                             byte[] b = new byte[info.size];
                             try {
                                 if (info.size != 0) {
+                                    //表示缓冲区的当前终点
                                     encodedData.limit(info.offset + info.size);
+                                    //下一个要被读或写的元素的索引，每次读写缓冲区数据时都会改变改值，为下次读写作准备
                                     encodedData.position(info.offset);
+                                   //get(byte[] dst, int offset, int length) 从position位置开始相对读，读length个byte，并写入dst下标从offset到offset+length的区域
                                     encodedData.get(b, info.offset, info.offset + info.size);
                                     socket.send(b);
                                 }

@@ -7,13 +7,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.action.amp.ampremotedesk.R;
 import com.action.amp.ampremotedesk.app.client.ClientActivity;
+import com.action.amp.ampremotedesk.app.utils.netTools.Pinger;
+import com.action.amp.ampremotedesk.app.utils.netTools.model.Device;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tianluhua on 21/7/17.
@@ -32,7 +41,7 @@ public class AddressInputDialog extends DialogFragment {
         final SharedPreferences prefs = getActivity().getSharedPreferences("MAIN_PREFS", Context.MODE_PRIVATE);
         String lastAddress = prefs.getString(KEY_LAST_ADDRESS_PREF, "");
 
-        final LinearLayout dialogLayout = (LinearLayout) inflater.inflate(R.layout.dialog_address_input, null);
+        final View dialogLayout = inflater.inflate(R.layout.dialog_address_input, null);
         final EditText addressInput = (EditText) dialogLayout.findViewById(R.id.address_input);
         addressInput.setText(lastAddress);
 
@@ -60,7 +69,44 @@ public class AddressInputDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         AddressInputDialog.this.getDialog().cancel();
                     }
-                });
+                }).setNeutralButton("Scanner", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                new ScannerIPTask().execute();
+            }
+        });
         return builder.create();
     }
+
+
+    public class ScannerIPTask extends AsyncTask<Void, Void, List<Device>> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("tlh","onPreExecute");
+        }
+
+        @Override
+        protected List<Device> doInBackground(Void... voids) {
+            String ipString = Pinger.getLocalIpv4Address();
+            if (ipString == null){
+                return new ArrayList<Device>(1);
+            }
+            int lastdot = ipString.lastIndexOf(".");
+            ipString = ipString.substring(0, lastdot);
+            List<Device> devices=Pinger.getDevicesOnNetwork(ipString);
+            Log.e("tlh","doInBackground__ipString:"+ipString+";devices.size():"+devices.size());
+            return devices;
+        }
+
+        @Override
+        protected void onPostExecute(List<Device> devices) {
+            super.onPostExecute(devices);
+            Log.e("tlh","onPostExecute__devices.size():"+devices.size());
+            for (Device device : devices) {
+                Log.e("tlh","device.ip:"+device.getIpAddress());
+            }
+        }
+    }
+
 }

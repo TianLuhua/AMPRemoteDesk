@@ -17,7 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-
 /**
  * Created by tianluhua on 2017/8/18 0018.
  */
@@ -62,7 +61,7 @@ public class ClientFragment extends BaseFragment implements ClientContract.View,
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        if (presenter!=null){
+        if (presenter != null) {
             Log.e("tlh", "surfaceCreated");
             presenter.start();
         }
@@ -111,7 +110,7 @@ public class ClientFragment extends BaseFragment implements ClientContract.View,
 
 
     @Override
-    public  void showToast(final String msg){
+    public void showToast(final String msg) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
